@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>webGLRenderer</title>
+</head>
+<body>
+    <div class="box">
+        <canvas id="container" width="1920" height="1080" class="webglContainer"></canvas>
+            <ul class="pannelInfo">
+                <li class="pannel-item">fps: <span id="fps"></span></li>
+                <li class="pannel-item">tris: <span id="tris"></span></li>
+                <li class="pannel-item">verts: <span id="verts"></span></li>
+                <li class="pannel-item">drawcall: <span id="drawcall"></span></li>
+            </ul>
+    </div>
+</body>
+<style>
+    html,body {
+        margin: 0;
+        padding: 0;
+    }
+    ul{
+        list-style: none;
+        position: absolute;
+        top: 10px;
+        right: 20px;
+        width: 200px;
+        background: rgba(1, 8, 71, 0.4);
+        padding: 10px;
+        border-radius: 5px;
+        height: 400px;
+    }
+    li{
+        color: #fff;
+        line-height: 2;
+        font-size: 16px;
+        
+    }
+</style>
+</html>
