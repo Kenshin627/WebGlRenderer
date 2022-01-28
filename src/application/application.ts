@@ -1,8 +1,9 @@
-import { Vector2 } from "../Math/Vector/Vector2";
+import { vec2 } from "gl-matrix";
 import { CanvasKeyBoardEvent } from "./event/canvasKeyBoardEvent";
 import { CanvasMouseEvent } from "./event/canvasMouseEvent";
 import { InputEventType } from "./event/types";
 import { Timer, TimerCallback } from '../utils/timer';
+
 
 export class Application implements EventListenerObject {
     public timers: Timer[];
@@ -25,6 +26,7 @@ export class Application implements EventListenerObject {
         this.isSupportMouseMove = false;
         this.afterRenderObservable = null;
         this.beforRenderObjservable = null;
+        this.timers = [];
         document.oncontextmenu = () => false;
         this.canvas.addEventListener("mousedown", this, false);
         this.canvas.addEventListener("mouseup", this, false);
@@ -36,6 +38,10 @@ export class Application implements EventListenerObject {
 
     public get isRun(): boolean {
         return this._start;
+    }
+
+    public async run(): Promise<void> {
+        this.start();
     }
     public start(): void {
         if (!this._start) {
@@ -92,7 +98,7 @@ export class Application implements EventListenerObject {
 
     }
 
-    protected viewportToCanvasCoordinate(evt: MouseEvent): Vector2 {
+    protected viewportToCanvasCoordinate(evt: MouseEvent): vec2 {
         let rect: DOMRect = this.canvas.getBoundingClientRect();
         if (evt.target) {
             let x = evt.clientX - rect.left;
@@ -100,7 +106,7 @@ export class Application implements EventListenerObject {
             if (this.isFlipYcoord) {
                 y = this.canvas.height - y;
             }
-            return new Vector2(x, y);
+            return vec2.fromValues(x, y);
         }else {
             throw new Error("event.target is null");
         }
@@ -117,7 +123,7 @@ export class Application implements EventListenerObject {
         if (this._isMouseDown && type === InputEventType.MOUSEDRAG) {
             _button = 2;
         }
-        let _mousePosition: Vector2 = this.viewportToCanvasCoordinate(<MouseEvent>evt);
+        let _mousePosition: vec2 = this.viewportToCanvasCoordinate(<MouseEvent>evt);
         return new CanvasMouseEvent(_event.altKey, _event.shiftKey, _event.ctrlKey, _button, _mousePosition, type);
     }
 
