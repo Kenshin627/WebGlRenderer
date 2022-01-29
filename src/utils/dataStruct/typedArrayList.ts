@@ -31,6 +31,12 @@ export class TypedArrayList<T extends Uint16Array | Uint8Array | Float32Array> {
         return this._length;
     }
 
+    public pushArray(arr: Array<number>): void {
+        arr.forEach( item => {
+            this.push(item);
+        })
+    }
+
     public subArray(start: number = 0, end: number = this.length): T{
         return this._array.subarray(start, end) as T;
     }
@@ -52,7 +58,8 @@ export class TypedArrayList<T extends Uint16Array | Uint8Array | Float32Array> {
     }
 
     public clear(): void {
-        this._length == 0;
+        // this._array = new this._typedArrayConstructor(this._capacity);
+        this._length = 0;
     }
 
     public at(idx: number): number {

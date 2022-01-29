@@ -6,6 +6,7 @@ export default `
     varying vec4 vColor;
 
     void main(void) {
+        gl_PointSize = 10.0;
         gl_Position = uMVPMatrix * vec4(aPosition, 1.0);
         vColor = aColor;
     }

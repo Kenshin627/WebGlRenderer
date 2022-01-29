@@ -1,3 +1,5 @@
+import { GLAttribInfo, GLAttribMap, GLUniformInfo, GLUniformMap } from "./types";
+
 export class GLHelper {
     public static printStates(gl: WebGLRenderingContext | null): void {
         if (gl === null) {
@@ -27,5 +29,32 @@ export class GLHelper {
             throw new Error("create webgl buffer failed!")
         }
         return buffer;
+    }
+
+    public static getProgramActiveAttribs(gl: WebGLRenderingContext, program: WebGLProgram, out: GLAttribMap): void {
+        let  attributsCount: number = gl.getProgramParameter(program, gl.ACTIVE_ATTRIBUTES);
+        for (let i = 0; i < attributsCount; i++) {
+           let info: WebGLActiveInfo | null = gl.getActiveAttrib(program, i);
+           if (info) {
+               out[info.name] = new GLAttribInfo(info.size, info.type, gl.getAttribLocation(program, info.name));
+           }
+        }
+    }
+
+    public static getProgramActiveUniforms(gl: WebGLRenderingContext, program: WebGLProgram, out: GLUniformMap): void {
+        let uniformsCount: number = gl.getProgramParameter(program, gl.ACTIVE_UNIFORMS);
+        for (let i = 0; i < uniformsCount; i++) {
+            let info: WebGLActiveInfo | null = gl.getActiveUniform(program, i);
+            if (info) {
+                let loc: WebGLUniformLocation | null = gl.getUniformLocation(program, info.name);
+                if (loc) {
+                    out[info.name] = new GLUniformInfo(info.size, info.type, loc);
+                }
+            }
+        }
+    }
+
+    public static setViewport(gl: WebGLRenderingContext, v: number[] ): void {
+        gl.viewport(v[0], v[1], v[2], v[3]);
     }
 }
