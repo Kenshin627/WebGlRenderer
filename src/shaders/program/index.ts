@@ -1,4 +1,4 @@
-export class glProgram {
+export class GLProgramCreator {
     static create(gl: WebGLRenderingContext): WebGLProgram {
         let program: WebGLProgram | null = gl.createProgram();
         if (!program) {

@@ -4,7 +4,7 @@ import { MathExtends } from '../math/index'
 import vs from '../shaders/shaderSource/default.vertex';
 import fs from '../shaders/shaderSource/default.fragment';
 import { ShaderCompilor, ShaderType } from "../shaders/shaderCompilor";
-import { glProgram } from "../shaders/program";
+import { GLProgramCreator } from "../shaders/program";
 import { TypedArrayList } from "../utils/dataStruct/typedArrayList";
 import { GLHelper } from "../utils/glHelper";
 import { GLAttribMap, GLUniformMap } from "../utils/types";
@@ -65,8 +65,8 @@ export class BasicWebGLApplication extends Application {
         ShaderCompilor.compilorShader(this.gl, this.shader_vs, this.vertexShader);
         ShaderCompilor.compilorShader(this.gl, this.shader_fs, this.fragmentShader);
 
-        this.program = glProgram.create(this.gl);
-        glProgram.link(
+        this.program = GLProgramCreator.create(this.gl);
+        GLProgramCreator.link(
             this.gl, 
             this.program, 
             this.vertexShader, 
